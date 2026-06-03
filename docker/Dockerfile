@@ -25,6 +25,10 @@ ARG INSTALL_ANTSXNET_DATA=0
 ENV VIRTUAL_ENV=/opt/venv
 ENV ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+ENV HOME=/tmp
+ENV antsxnet_cache_directory="/tmp/.keras/ANTsXNet"
+ENV TF_ENABLE_ONEDNN_OPTS=0
+ENV OPENBLAS_CORETYPE=GENERIC
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
@@ -34,18 +38,9 @@ RUN apt-get update && \
       procps && \
     rm -rf /var/lib/apt/lists/*
 
-# Make a user and add data to the expected location for antspy
-# Also set up .keras directory for antspynet data and models
-# Note this is owned by root ant not writeable by the user
-#
-# This is to prevent users spinning up multiple instances of the
-# container and downloading the data to a non-persistent location
-#
-RUN useradd --create-home antspyuser && \
-    mkdir /home/antspyuser/.antspy /home/antspyuser/.keras
+RUN mkdir -p /tmp/.antspy /tmp/.keras
 
-COPY --from=builder --chown=antspyuser \
-     /opt/antspydata/* /home/antspyuser/.antspy/
+COPY --from=builder /opt/antspydata/ /tmp/.antspy/
 
 COPY download_antsxnet_data.py /opt/bin/
 
@@ -53,18 +48,16 @@ RUN echo "Install data option: ${INSTALL_ANTSXNET_DATA}" && \
     if [ "${INSTALL_ANTSXNET_DATA}" = "1" ]; then \
         . "${VIRTUAL_ENV}/bin/activate" && \
         /opt/bin/download_antsxnet_data.py \
-            --cache-dir /home/antspyuser/.keras/ANTsXNet \
+            --cache-dir /tmp/.keras/ANTsXNet \
             --strict ; \
     else \
         echo "Skipping ANTsXNet data download"; \
     fi && \
-    chmod -R 0755 /home/antspyuser/.antspy /home/antspyuser/.keras
+    chmod -R a+rX /tmp/.antspy && \
+    chmod -R a+rwX /tmp/.keras
 
-WORKDIR /home/antspyuser
-USER antspyuser
+WORKDIR /tmp
 
 LABEL maintainer="Philip A Cook (https://github.com/cookpa)" \
       description="ANTsPyNet is part of the ANTsX ecosystem (https://github.com/ANTsX). \
 ANTsX citation: https://pubmed.ncbi.nlm.nih.gov/33907199"
-ENTRYPOINT ["python"]
-
