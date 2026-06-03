@@ -39,7 +39,7 @@ h5py==3.11.0
     # via
     #   keras
     #   tensorflow
-idna==3.7
+idna==3.15
     # via requests
 imageio==2.34.1
     # via scikit-image
@@ -115,7 +115,7 @@ pandas==2.2.2
     #   statsmodels
 patsy==0.5.6
     # via statsmodels
-pillow==12.1.1
+pillow==12.2.0
     # via
     #   antspyx
     #   imageio
@@ -127,7 +127,7 @@ protobuf==5.29.6
     # via
     #   tensorboard
     #   tensorflow
-pygments==2.18.0
+pygments==2.20.0
     # via rich
 pyparsing==3.1.2
     # via matplotlib
@@ -139,7 +139,7 @@ pytz==2024.1
     # via pandas
 pyyaml==6.0.1
     # via antspyx
-requests==2.32.4
+requests==2.33.0
     # via
     #   antspynet (pyproject.toml)
     #   chart-studio
@@ -194,7 +194,7 @@ typing-extensions==4.11.0
     #   tensorflow
 tzdata==2024.1
     # via pandas
-urllib3==2.6.3
+urllib3==2.7.0
     # via requests
 webcolors==1.13
     # via antspyx

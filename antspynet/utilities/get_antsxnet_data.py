@@ -81,6 +81,7 @@ def get_antsxnet_data(file_id=None,
             "xrayLungPriors": "https://ndownloader.figshare.com/files/41965815",
             "priorDktLabels": "https://ndownloader.figshare.com/files/24139802",
             "S_template3": "https://ndownloader.figshare.com/files/22597175",
+            "S_template3_brain": "https://ndownloader.figshare.com/files/64836798",
             "priorDeepFlashLeftLabels": "https://ndownloader.figshare.com/files/25422098",
             "priorDeepFlashRightLabels": "https://ndownloader.figshare.com/files/25422101",
             "adni": "https://ndownloader.figshare.com/files/25516361",
@@ -117,7 +118,10 @@ def get_antsxnet_data(file_id=None,
             "DevCCF_P56_MRI-T2_50um_BrainParcellationNickMask": "https://ndownloader.figshare.com/files/44706238",
             "DevCCF_P56_MRI-T2_50um_BrainParcellationTctMask": "https://ndownloader.figshare.com/files/47214532",
             "DevCCF_P04_STPT_50um": "https://ndownloader.figshare.com/files/46711546",
-            "DevCCF_P04_STPT_50um_BrainParcellationJayMask": "https://ndownloader.figshare.com/files/46712656"
+            "DevCCF_P04_STPT_50um_BrainParcellationJayMask": "https://ndownloader.figshare.com/files/46712656",
+            "CIT168_T1w_700um_pad_adni": "https://ndownloader.figshare.com/files/64536261",
+            "CIT168_basal_forebrain_adni": "https://ndownloader.figshare.com/files/64536324",
+            "det_atlas_25_pad_LR_adni": "https://ndownloader.figshare.com/files/64536333",
         }
         return(switcher.get(argument, "Invalid argument."))
 
@@ -144,6 +148,7 @@ def get_antsxnet_data(file_id=None,
                   "protonLungTemplate",
                   "xrayLungPriors",
                   "S_template3",
+                  "S_template3_brain",
                   "adni",
                   "ixi",
                   "kirby",
@@ -179,6 +184,9 @@ def get_antsxnet_data(file_id=None,
                   "hcpinterFATemplate",
                   "hcpinterTemplateBrainMask",
                   "hcpinterTemplateBrainSegmentation",
+                  "CIT168_T1w_700um_pad_adni",
+                  "CIT168_basal_forebrain_adni",
+                  "det_atlas_25_pad_LR_adni",
                   "show")
 
     if not file_id in valid_list:
